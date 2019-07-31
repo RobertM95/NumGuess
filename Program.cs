@@ -30,6 +30,7 @@ namespace NumberGuesser
 
                 // init guess var 
                 int guess = 0;
+                int Attempts = 0;
 
                 // ask user for number#
                 Console.WriteLine("Guess a number between 1 and 20");
@@ -38,8 +39,7 @@ namespace NumberGuesser
                 while (guess != correctNum)
                 {
                     //get users input
-                    string input = Console.ReadLine();
-
+                    string input = Console.ReadLine();                   
 
                     // checks the input is a number
                     if (!int.TryParse(input, out guess))
@@ -47,51 +47,51 @@ namespace NumberGuesser
                         ChangeColour(ConsoleColor.Red, "That is not a Number!");
 
                         // keep going
-                        //continue;
+                        continue;
                         //Thanks Robert:)
-                    }
+                    }                   
 
+                    if (guess != correctNum && guess >= 1 && guess <= 20)
+                    {
+                        Attempts++;
+
+                            if (Attempts < 0)
+                            {
+                                Attempts = 0;
+                            }
+                            if (Attempts == 3)
+                            {
+                                Console.WriteLine("You have had too many tries");
+                                PlayAgain();
+                            }
+                        }
 
                     // Cast to int and put into guess variable
                     guess = Int32.Parse(input);
-
+                   
                     if (guess > 20 || guess < 1)
                     {
-                        Console.WriteLine("You must be between numbers 1 and 20");
+                        //Attempts--;
+                        Console.WriteLine("You must enter numbers between 1 and 20");
 
                         continue;
                     }
 
                     if (guess != correctNum)
                     {
-
                         ChangeColour(ConsoleColor.Red, "Wrong number, Try again!");
-                    }
-                }
-
+                    }                                         
+                }               
                 //output success message
-
                 ChangeColour(ConsoleColor.DarkYellow, "Congratulations! you guessed the correct number!");
 
                 // does the user want to play again
-
                 PlayAgain();
-
-                // Get users answer
             }
         }
 
         static void GetAppInfo()
         {
-            //string name = "Test Name";
-            //int Num = 21;
-            //float Float = 1.5f;
-            //bool Status = true;
-
-            // Start code here //
-            //Console.WriteLine(name);
-            //Console.WriteLine("{0} is {1}", name, Num);
-
             //Variables
             string appName = "Number Guesser";
             string appVersion = "1.0.0";
@@ -136,7 +136,6 @@ namespace NumberGuesser
         {
             string answer;
 
-                //answer != "Y" && answer != "N"
             while (true)
             {
                 Console.WriteLine("Play Again? [Y] or [N]");
@@ -152,19 +151,20 @@ namespace NumberGuesser
             {
 
                 Console.WriteLine("OK, Here we go!");
+                //Calls Game function
                 Game();
             }
             else if (answer == "N")
             {
                 Console.WriteLine("Thank you for playing!");
-                GameEnd();
-             
+                //calls GameEnd function
+                GameEnd();             
             }
         }
 
         static void GameEnd()
         {
-            Environment.Exit(0);
+            Environment.Exit(0);          
         }
     }
 }
